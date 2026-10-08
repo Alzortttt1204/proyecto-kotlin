@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Carpetas que FileProvider puede compartir (fotos de la cámara y copias de evidencias) -->
+<paths>
+    <files-path
+        name="evidencias"
+        path="evidencias/" />
+</paths>
