@@ -19,6 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-// Nombre provisional: cambiar "X" por el número de grupo cuando el profe lo asigne
-rootProject.name = "AppSolicitudes_GrupoX"
+rootProject.name = "AppSolicitudes_Grupo8"
 include(":app")

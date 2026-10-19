@@ -1,20 +1,17 @@
-# AppSolicitudes_GrupoX
+# AppSolicitudes_Grupo8
 
 App Android del **caso DSY1105-005D** (Duoc UC): *Gestión móvil y seguimiento de solicitudes de
 clientes*. Implementa el **módulo de Solicitudes**: registrar, listar, consultar y editar
 solicitudes, con una imagen de evidencia tomada con la cámara o elegida desde la galería.
 
-> Nombre provisional: reemplazar `X` por el número de grupo en `settings.gradle.kts`
-> (`rootProject.name`).
-
 Todos los datos son **ficticios** (solicitudes, fotos y usuario de prueba).
 
 ## Integrantes
 
-- Nombre Apellido 1
-- Nombre Apellido 2
+- Bastian Alarcon
+- Ignacio Hidalgo
 
-Planificación en Trello: *(pegar aquí el enlace del tablero)*
+Planificación en Trello: https://trello.com/b/a03BejlX/dsy1105-app-solicitudes-ev-parcial-2
 
 ## Tecnologías
 
