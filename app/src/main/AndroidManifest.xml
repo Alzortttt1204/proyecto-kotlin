@@ -2,22 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Notificaciones locales (Android 13+ pide autorización al usuario) -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <!-- La cámara es opcional: la app funciona igual en equipos sin cámara -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <!-- Permite detectar si WhatsApp está instalado para compartir la solicitud (Android 11+) -->
-    <queries>
-        <package android:name="com.whatsapp" />
-        <package android:name="com.whatsapp.w4b" />
-    </queries>
-
     <application
-        android:name=".AppSolicitudesApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -40,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Comparte las fotos de la cámara y las evidencias de forma segura (guía 13) -->
+        <!-- Entrega a la cámara una Uri segura donde guardar la foto de evidencia -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

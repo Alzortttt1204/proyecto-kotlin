@@ -14,8 +14,3 @@
 .cxx
 local.properties
 
-# Firma del APK release: nunca se versiona
-keystore.properties
-/keystore/
-*.jks
-*.keystore
