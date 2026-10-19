@@ -1,7 +1,10 @@
 package com.example.solicitudes.ui.navigation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +18,7 @@ import com.example.solicitudes.ui.solicitud.SolicitudViewModel
 
 // Secuencia: Login -> Menú -> ListaSolicitudesScreen -> SolicitudFormScreen
 @Composable
-fun AppNavigation(modifier: Modifier = Modifier) {
+fun AppNavigation() {
     val navController = rememberNavController()
 
     // Un único SolicitudViewModel que comparten el menú, la lista y el formulario
@@ -25,7 +28,12 @@ fun AppNavigation(modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = "login",
-        modifier = modifier
+        // Animación al cambiar de pantalla: la nueva entra deslizándose desde la derecha
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }) + fadeIn() },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -it / 3 }) + fadeOut() },
+        // Al volver atrás, el movimiento es al revés
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -it / 3 }) + fadeIn() },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) + fadeOut() }
     ) {
         composable("login") {
             LoginScreen(navController, loginViewModel)

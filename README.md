@@ -1,27 +1,48 @@
 # AppSolicitudes_GrupoX
 
 App Android del **caso DSY1105-005D** (Duoc UC): *Gestión móvil y seguimiento de solicitudes de
-clientes*. Esta **primera entrega** implementa solo el **módulo de Solicitudes**, como indican los
-lineamientos: registrar, listar, consultar y editar solicitudes, con una foto de evidencia tomada
-con la cámara.
+clientes*. Implementa el **módulo de Solicitudes**: registrar, listar, consultar y editar
+solicitudes, con una imagen de evidencia tomada con la cámara o elegida desde la galería.
 
 > Nombre provisional: reemplazar `X` por el número de grupo en `settings.gradle.kts`
 > (`rootProject.name`).
 
 Todos los datos son **ficticios** (solicitudes, fotos y usuario de prueba).
 
+## Integrantes
+
+- Nombre Apellido 1
+- Nombre Apellido 2
+
+Planificación en Trello: *(pegar aquí el enlace del tablero)*
+
 ## Tecnologías
 
 Kotlin · Jetpack Compose · Material 3 · MVVM (ViewModel + UiState + StateFlow) ·
-Navigation Compose · Room · Cámara (`TakePicture` + `FileProvider`).
+Navigation Compose · Room · Cámara (`TakePicture` + `FileProvider`) · Galería (`OpenDocument`) ·
+Animaciones de Compose.
+
+## Funcionalidades
+
+- **Login** con usuario de prueba y validación de campos.
+- **Menú principal** para ir a la lista, crear una solicitud o cerrar sesión.
+- **Lista de solicitudes** guardadas en Room: código, título, categoría, estado y fecha.
+- **Registro de solicitud**: título, descripción, categoría y servicio relacionado. Se genera un
+  código único (`SOL-XXXXXXXX`), el estado inicial es **Recibida** y se guarda la fecha y hora.
+- **Consulta y edición**: al tocar una solicitud se abre el formulario con sus datos y su foto.
+- **Evidencia ficticia**: foto con la **cámara** o imagen de la **galería**, guardada con la
+  solicitud.
+- **Validaciones** con ícono y mensaje de error en cada campo.
+- **Animaciones** en la navegación, la lista y la foto de evidencia.
 
 ## Cómo ejecutar
 
-1. Abrir la carpeta en Android Studio y esperar la sincronización de Gradle.
-2. Ejecutar en un emulador o celular con Android 8.0 (API 26) o superior.
-3. Ingresar con el usuario de prueba **demo** / clave **1234**.
+1. Clonar el repositorio y abrir la carpeta en Android Studio.
+2. Esperar la sincronización de Gradle.
+3. Ejecutar en un emulador o celular con Android 8.0 (API 26) o superior.
+4. Ingresar con el usuario de prueba **demo** / clave **1234**.
 
-## Estructura
+## Estructura (MVVM)
 
 ```
 app/src/main/java/com/example/solicitudes/
@@ -37,7 +58,7 @@ app/src/main/java/com/example/solicitudes/
 │   ├── menu/                       MenuScreen
 │   ├── solicitud/
 │   │   ├── ListaSolicitudesScreen.kt
-│   │   ├── SolicitudFormScreen.kt  Formulario (crear / editar) + cámara
+│   │   ├── SolicitudFormScreen.kt  Formulario (crear / editar) + cámara y galería
 │   │   ├── SolicitudUiState.kt
 │   │   └── SolicitudViewModel.kt   Estado, validaciones y guardado en Room
 │   ├── navigation/
@@ -46,36 +67,41 @@ app/src/main/java/com/example/solicitudes/
 └── MainActivity.kt
 ```
 
-## Cumplimiento de los lineamientos
+Flujo de datos: Screen → `SolicitudViewModel` → `SolicitudRepository` → `SolicitudDao` → Room.
+Las pantallas solo muestran el estado y envían eventos; las validaciones están en
+`validarFormulario()` de cada ViewModel.
 
-| Criterio | Dónde se ve |
-|---|---|
-| Navegación | `MainActivity` → `AppNavigation` (`NavHost`) |
-| Secuencia | Login → Menú → `ListaSolicitudesScreen` → `SolicitudFormScreen` |
-| ListaSolicitudesScreen | Muestra código, título, categoría, estado y fecha de cada solicitud guardada |
-| SolicitudFormScreen | Crea una solicitud nueva o edita una existente (al tocarla en la lista) |
-| Formulario | Título, descripción, categoría (lista desplegable), servicio relacionado y foto |
-| Validación | `validarFormulario()` en el ViewModel; errores con `isError` y `supportingText` |
-| Gestión de estado | `SolicitudUiState` + `MutableStateFlow` / `StateFlow` |
-| MVVM | Screen → `SolicitudViewModel` → `SolicitudRepository` → `SolicitudDao` → Room |
-| Room | La solicitud queda guardada y sigue disponible al reiniciar la app |
-| Reactividad | El DAO devuelve `Flow`: la lista se actualiza sola al registrar o editar |
-| Recurso nativo | Cámara: la foto queda asociada a la solicitud y se ve al consultarla o editarla |
+## Validaciones
 
-**Validaciones:** título obligatorio · descripción obligatoria con mínimo 10 caracteres ·
-categoría obligatoria · servicio relacionado obligatorio.
+| Formulario | Campo | Regla |
+|---|---|---|
+| Login | Usuario | Obligatorio |
+| Login | Clave | Obligatoria y debe coincidir con el usuario de prueba |
+| Solicitud | Título | Obligatorio |
+| Solicitud | Descripción | Obligatoria, mínimo 10 caracteres |
+| Solicitud | Categoría | Obligatoria |
+| Solicitud | Servicio relacionado | Obligatorio |
 
-**Al registrar:** se genera un código único (`SOL-XXXXXXXX`), el estado inicial es **Recibida** y
-se guarda la fecha y hora.
+Cada campo con error se marca en rojo (`isError`), muestra un ícono de error y el mensaje debajo
+(`supportingText`). El error se borra al volver a escribir.
 
-## Cámara
+## Recursos nativos
 
-1. En el formulario, **Tomar foto** crea un archivo vacío en la carpeta privada de la app
-   (`files/evidencias/`) y obtiene su Uri con `FileProvider` (`res/xml/file_paths.xml`).
-2. `rememberLauncherForActivityResult(ActivityResultContracts.TakePicture())` abre la cámara y
-   guarda la foto en esa Uri.
-3. La Uri se guarda en el `SolicitudUiState` (`evidenciaUri`) y, al guardar, en Room junto a la
-   solicitud.
-4. Al abrir la solicitud desde la lista, la foto se muestra en el formulario.
+1. **Cámara**: el botón *Cámara* crea un archivo en la carpeta privada de la app
+   (`files/evidencias/`), obtiene su Uri con `FileProvider` (`res/xml/file_paths.xml`) y abre la
+   cámara con `ActivityResultContracts.TakePicture()`. No se pide el permiso `CAMERA` porque la
+   foto la toma la app de cámara del sistema.
+2. **Galería**: el botón *Galería* abre el selector de imágenes del dispositivo con
+   `ActivityResultContracts.OpenDocument()`. Se toma un permiso de lectura permanente
+   (`takePersistableUriPermission`) para seguir viendo la imagen al reiniciar la app.
 
-No se pide el permiso `CAMERA`: la foto la toma la app de cámara del sistema.
+En ambos casos la Uri se guarda en Room junto a la solicitud y la imagen se muestra al consultarla
+o editarla.
+
+## Animaciones
+
+| Dónde | Animación | Archivo |
+|---|---|---|
+| Cambio de pantalla | Deslizamiento + desvanecido (`slideInHorizontally` + `fadeIn`) | `AppNavigation.kt` |
+| Lista de solicitudes | Las tarjetas aparecen y se reacomodan (`Modifier.animateItem()`) | `ListaSolicitudesScreen.kt` |
+| Foto de evidencia | Aparece con desvanecido y expansión (`AnimatedVisibility`) | `SolicitudFormScreen.kt` |

@@ -57,6 +57,9 @@ dependencies {
     // Dependencia para la navegación con Jetpack Compose
     implementation(libs.androidx.navigation.compose)
 
+    // Íconos de Compose
+    implementation(libs.androidx.material.icons.extended)
+
     // Dependencias Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
