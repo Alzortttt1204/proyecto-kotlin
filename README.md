@@ -39,6 +39,21 @@ Animaciones de Compose.
 3. Ejecutar en un emulador o celular con Android 8.0 (API 26) o superior.
 4. Ingresar con el usuario de prueba **demo** / clave **1234**.
 
+## Pruebas realizadas
+
+Probadas en emulador Android (Medium Phone, API 37).
+
+| # | Prueba | Resultado esperado | Estado |
+|---|---|---|---|
+| 1 | Login con clave incorrecta | Se queda en el login y muestra el error | OK |
+| 2 | Login con demo / 1234 | Entra al menú principal | OK |
+| 3 | Guardar formulario vacío | Muestra 4 errores (uno por campo) | OK |
+| 4 | Registrar solicitud válida | Aparece en la lista con código SOL- y estado Recibida | OK |
+| 5 | Editar el título | Cambia en la lista y mantiene el mismo código | OK |
+| 6 | Foto con la cámara | La foto se ve en el formulario | OK |
+| 7 | Imagen de la galería | La imagen se ve en el formulario | OK |
+| 8 | Cerrar y reabrir la app | Se mantienen las solicitudes y las imágenes | OK |
+
 ## Estructura (MVVM)
 
 ```
