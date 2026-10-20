@@ -13,6 +13,13 @@ Todos los datos son **ficticios** (solicitudes, fotos y usuario de prueba).
 
 Planificación en Trello: https://trello.com/b/a03BejlX/dsy1105-app-solicitudes-ev-parcial-2
 
+### Distribución de tareas
+
+| Integrante | Tareas |
+|---|---|
+| Bastian Alarcon | Configuración del proyecto, persistencia con Room, repositorio y SolicitudViewModel, cámara, navegación |
+| Ignacio Hidalgo | Login con validaciones, menú principal, lista de solicitudes, formulario de solicitud, galería |
+
 ## Tecnologías
 
 Kotlin · Jetpack Compose · Material 3 · MVVM (ViewModel + UiState + StateFlow) ·
