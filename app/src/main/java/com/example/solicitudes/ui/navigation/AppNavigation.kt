@@ -22,7 +22,6 @@ fun AppNavigation() {
     val navController = rememberNavController()
 
     // Un único SolicitudViewModel que comparten el menú, la lista y el formulario
-    val loginViewModel: LoginViewModel = viewModel()
     val solicitudViewModel: SolicitudViewModel = viewModel()
 
     NavHost(
@@ -36,6 +35,9 @@ fun AppNavigation() {
         popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) + fadeOut() }
     ) {
         composable("login") {
+            // El LoginViewModel vive solo mientras el login está en la pila:
+            // al cerrar sesión se crea uno nuevo y los campos aparecen vacíos
+            val loginViewModel: LoginViewModel = viewModel()
             LoginScreen(navController, loginViewModel)
         }
         composable("menu") {

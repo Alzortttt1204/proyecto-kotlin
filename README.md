@@ -60,6 +60,8 @@ Probadas en emulador Android (Medium Phone, API 37).
 | 6 | Foto con la cámara | La foto se ve en el formulario | OK |
 | 7 | Imagen de la galería | La imagen se ve en el formulario | OK |
 | 8 | Cerrar y reabrir la app | Se mantienen las solicitudes y las imágenes | OK |
+| 9 | Login con el celular en horizontal | Se puede desplazar la pantalla y presionar Ingresar | OK |
+| 10 | Cerrar sesión | El login aparece con los campos vacíos | OK |
 
 ## Estructura (MVVM)
 

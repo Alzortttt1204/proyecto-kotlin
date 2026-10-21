@@ -1,5 +1,7 @@
 package com.example.solicitudes.ui.login
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,6 +40,8 @@ fun LoginScreen(
             Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                // Permite desplazar la pantalla en horizontal para llegar al botón Ingresar
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
