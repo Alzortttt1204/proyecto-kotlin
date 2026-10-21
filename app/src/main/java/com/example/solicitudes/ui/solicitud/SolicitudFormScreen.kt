@@ -184,7 +184,14 @@ fun SolicitudFormScreen(
                     readOnly = true,
                     label = { Text("Categoría") },
                     leadingIcon = { Icon(Icons.Filled.Category, contentDescription = null) },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoriasAbiertas) },
+                    trailingIcon = {
+                        // Con error muestra el ícono de error; si no, la flecha de la lista
+                        if (estado.categoriaError != null) {
+                            Icon(Icons.Filled.Error, contentDescription = "Error")
+                        } else {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoriasAbiertas)
+                        }
+                    },
                     isError = estado.categoriaError != null,
                     supportingText = {
                         estado.categoriaError?.let {
